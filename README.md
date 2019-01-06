@@ -7,11 +7,11 @@
 
 ### CLONE
 
-    git clone git@github.com:far-edge/distributed-data-analytics.git
+    git clone git@github.com:far-edge/analytics-dashboard.git
 
 ### CREATE THE VIRTUAL ENVIRONMENT
 
-    cd distributed-data-analytics/analytics-dashboard
+    cd analytics-dashboard
     nodeenv -n 10.1.0 --prebuilt env
 
 ### ACTIVATE THE VIRTUAL ENVIRONMENT
