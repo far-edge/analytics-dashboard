@@ -44,19 +44,14 @@ const DataSourceDefinitionForm = (props) => {
         />
       </Form.Field>
       <Form.Field inline>
-        <label>{ tr('DATA_KINDS') }</label>
+        <label>{ tr('DATA_KIND') }</label>
         <Dropdown
           fluid
-          multiple
           selection
-          name='dataKinds'
+          name='dataKindReferenceID'
           options={ dataKinds }
-          value={
-            props.dataSourceDefinition.dataKindReferenceIDs.dataKindReferenceID.map((dk) => {
-              return dk.id || dk;
-            })
-          }
-          onChange={ (e, data) => { props.onChangeValue(data.name, data.value); } }
+          value={ props.dataSourceDefinition.dataKindReferenceID }
+          onChange={ (_e, data) => { props.onChangeValue(data.name, data.value); } }
         />
       </Form.Field>
       <Segment className='clearing actions'>

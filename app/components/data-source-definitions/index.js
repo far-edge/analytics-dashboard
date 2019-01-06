@@ -23,9 +23,7 @@ class DataSourceDefinitions extends Component {
         name: '',
         description: '',
         dataInterfaceReferenceID: '',
-        dataKindReferenceIDs: {
-          dataKindReferenceID: [ ]
-        }
+        dataKindReferenceID: ''
       },
       modal: false
     };
@@ -95,9 +93,7 @@ class DataSourceDefinitions extends Component {
         name: '',
         description: '',
         dataInterfaceReferenceID: '',
-        dataKindReferenceIDs: {
-          dataKindReferenceID: [ ]
-        }
+        dataKindReferenceID: ''
       },
       modal: true
     });
@@ -120,8 +116,8 @@ class DataSourceDefinitions extends Component {
       messages.error(tr('SELECT_DATA_INTERFACE'));
       return;
     }
-    if (!dataSourceDefinition.dataKindReferenceIDs || !dataSourceDefinition.dataKindReferenceIDs.dataKindReferenceID) {
-      messages.error(tr('SELECT_DATA_KINDS'));
+    if (!dataSourceDefinition.dataKindReferenceID) {
+      messages.error(tr('SELECT_DATA_KIND'));
       return;
     }
     // eslint-disable-next-line no-console
@@ -164,11 +160,7 @@ class DataSourceDefinitions extends Component {
 
   changeValue(field, value) {
     const dataSourceDefinition = { ...this.state.dataSourceDefinition };
-    if (field === 'dataKinds') {
-      dataSourceDefinition.dataKindReferenceIDs.dataKindReferenceID = value;
-    } else {
-      dataSourceDefinition[field] = value;
-    }
+    dataSourceDefinition[field] = value;
     setTimeout(() => {
       this.setState({ dataSourceDefinition });
     }, 0);

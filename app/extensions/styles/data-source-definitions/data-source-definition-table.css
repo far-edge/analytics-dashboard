@@ -6,7 +6,7 @@
 .ui.container.data-source-definitions .ReactTable .h-name,
 .ui.container.data-source-definitions .ReactTable .h-description,
 .ui.container.data-source-definitions .ReactTable .h-data-interface,
-.ui.container.data-source-definitions .ReactTable .h-data-kinds {
+.ui.container.data-source-definitions .ReactTable .h-data-kind {
   text-align: left;
   color: var(--blue);
 }

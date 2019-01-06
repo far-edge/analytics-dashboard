@@ -32,16 +32,13 @@ const DataSourceDefinitionTable = (props) => {
     headerClassName: 'h-data-interface'
   }, {
     id: 'data-kinds',
-    Header: tr('DATA_KINDS'),
+    Header: tr('DATA_KIND'),
     accessor: (dataSourceDefinition) => {
-      const ids = dataSourceDefinition.dataKindReferenceIDs ?
-        dataSourceDefinition.dataKindReferenceIDs.dataKindReferenceID : [];
-      return ids.map((id) => {
-        return first(props.dataKinds.filter((dk) => { return dk.id === id; })).name;
-      }).join(', ');
+      const id = dataSourceDefinition.dataKindReferenceID;
+      return id ? first(props.dataKinds.filter((dk) => { return dk.id === id; })).name : '';
     },
-    className: 'c-data-kinds',
-    headerClassName: 'h-data-kinds'
+    className: 'c-data-kind',
+    headerClassName: 'h-data-kind'
   }, {
     id: 'actions',
     Header: '',
