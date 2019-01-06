@@ -3,7 +3,7 @@
   "description": "The FAR-EDGE analytics dashboard.",
   "author": "Athens Information Technology <info@ait.gr>",
   "version": "1.0.0",
-  "license": "UNLICENSED",
+  "license": "Apache License v2.0",
   "engines": {
     "node": ">=10.1.0",
     "npm": ">=5.6.0"
