@@ -7,6 +7,7 @@
 **CHANGED**
 
 * Align code with latest digital models.
+* Dockerise.
 
 
 ##### [1.0.0] - 2018-01-06
