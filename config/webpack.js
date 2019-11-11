@@ -68,7 +68,9 @@ const config = {
   // Configure the compiler plugins.
   plugins: isDevelopment ? [
     // Read, parse and export the listed env vars from the .env file.
-    new DotEnvPlugin(),
+    new DotEnvPlugin({
+      systemvars: true
+    }),
     // Enable hot module replacement.
     new webpack.HotModuleReplacementPlugin(),
     // Cause the relative path of the module to be displayed when hot module replacement is
@@ -89,7 +91,9 @@ const config = {
     new SpriteLoaderPlugin()
   ] : [
     // Read, parse and export the listed env vars from the .env file.
-    new DotEnvPlugin(),
+    new DotEnvPlugin({
+      systemvars: true
+    }),
     // Minify the JavaScript files.
     new webpack.optimize.UglifyJsPlugin({
       include: /\/app/,

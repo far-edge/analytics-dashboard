@@ -1,10 +1,9 @@
 import moment from 'moment';
 import React, { Component } from 'react';
 import autoBind from 'react-autobind';
-import { LineChart } from 'react-easy-chart';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Container, Dropdown, Form, Message } from 'semantic-ui-react';
+import { Container, Dropdown, Form, Icon, Label, Message, Segment } from 'semantic-ui-react';
 
 import dataSources from 'actions/data-sources';
 import { first } from 'helpers/chisels';
@@ -18,38 +17,26 @@ class Data extends Component {
     super(props);
     this.state = {
       dataSource: null,
-      data: [ ],
-      componentWidth: 300
+      data: [ ]
     };
-    this.INTERVAL = 15000;
-    this.NUMBER_OF_VALUES = 30;
+    this.INTERVAL = 10000;
+    this.NUMBER_OF_VALUES = 100;
     autoBind(this);
     this.fetchData = this.fetchData.bind(this);
-    this.handleResize = this.handleResize.bind(this);
   }
 
   componentDidMount() {
     this.fetchDataSources();
     if (this.state.dataSource) {
       this.timer = setInterval(this.fetchData, this.INTERVAL);
+      this.fetchData();
     }
-    window.addEventListener('resize', this.handleResize);
-    this.handleResize();
   }
 
   componenWillUnmount() {
     // NOTE: The component never gets unmounted. So, there is definitely something I need to fix.
     if (this.timer) {
       clearInterval(this.timer);
-    }
-    window.removeEventListener('resize', this.handleResize);
-  }
-
-  handleResize() {
-    if (this.container) {
-      this.setState({
-        componentWidth: this.container.offsetWidth - 60
-      });
     }
   }
 
@@ -80,7 +67,6 @@ class Data extends Component {
     this.setState({ dataSource, data: [] }, () => {
       if (noDataSourceBefore) {
         this.timer = setInterval(this.fetchData, this.INTERVAL);
-        this.handleResize();
       }
     });
   }
@@ -107,11 +93,9 @@ class Data extends Component {
         return null;
       }
       const latest = this.state.data && this.state.data.length ?
-        moment(this.state.data[this.state.data.length - 1].x, 'D-MMM-YY HH:mm:ss') : null;
+        moment(this.state.data[this.state.data.length - 1].timestamp, 'YYYY-MM-DD HH:mm:ss') : null;
       const moreData = response.data.data.filter((d) => {
-        return !latest || moment(d.timestamp, 'D-MMM-YY HH:mm:ss').isAfter(latest);
-      }).map((d) => {
-        return { x: d.timestamp, y: parseInt(d.value) };
+        return !latest || moment(d.timestamp, 'YYYY-MM-DD HH:mm:ss').isAfter(latest);
       });
       const data = [ ...this.state.data ].concat(moreData);
       while (data.length > this.NUMBER_OF_VALUES) {
@@ -132,14 +116,8 @@ class Data extends Component {
     const dataSources = this.props.dataSources.map((ds) => {
       return { key: ds.id, text: ds.name, value: ds.id };
     });
-    const min = this.state.data.reduce((acc, d) => {
-      return d.y < acc ? d.y : acc;
-    }, this.state.data && this.state.data.length ? this.state.data[0].y : 0);
-    const max = this.state.data.reduce((acc, d) => {
-      return d.y > acc ? d.y : acc;
-    }, this.state.data && this.state.data.length ? this.state.data[0].y : 0);
     return (
-      <Container className='data pretty-scroll'>
+      <Container className='data-from-source pretty-scroll'>
         <Form>
           <Form.Field inline>
             <label>{ tr('DATA_SOURCE') }</label>
@@ -157,27 +135,20 @@ class Data extends Component {
         </Form>
         {
           this.state.dataSource ? (
-            <div ref={ (c) => { this.container = c; } }>
-              <LineChart
-                className='chart'
-                margin={ { top: 40, right: 40, bottom: 50, left: 50 } }
-                data={ [ this.state.data ] }
-                datePattern='%d-%b-%y %H:%M:%S'
-                xType='time'
-                width={ this.state.componentWidth }
-                height={ 400 }
-                yDomainRange={ [ min - 2, max + 2 ] }
-                axes
-                grid
-                verticalGrid
-                style={
-                  {
-                    '.line0': {
-                      stroke: 'green'
-                    }
-                  }
-                }
-              />
+            <div className='data pretty-scroll' ref={ (c) => { this.container = c; } }>
+              {
+                this.state.data.map((datum) => {
+                  return (
+                    <Segment className='datum' key={ datum.timestamp }>
+                      <Label>
+                        <Icon name='calendar' />
+                        { datum.timestamp }
+                      </Label>
+                      { datum.value }
+                    </Segment>
+                  );
+                })
+              }
             </div>
           ) : (
             <Message>{ tr('NO_DATA') }</Message>

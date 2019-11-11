@@ -1,13 +1,13 @@
 FROM node:10.1.0
 
-WORKDIR /faredge/analytics-dashboard
+WORKDIR /faredge-analytics-dashboard
 
-COPY package.json /faredge/analytics-dashboard
-COPY package-lock.json /faredge/analytics-dashboard
+COPY package.json /faredge-analytics-dashboard
+COPY package-lock.json /faredge-analytics-dashboard
 RUN npm install
 
-COPY . /faredge/analytics-dashboard
+COPY . /faredge-analytics-dashboard
 
-EXPOSE ${PORT}
+EXPOSE 8000
 
-CMD [ "npm", "start" ]
+CMD [ "node_modules/.bin/babel-node", "./scripts/start.js", "start" ]
