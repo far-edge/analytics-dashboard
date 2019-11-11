@@ -39,11 +39,11 @@ bsync.init({
     ]
   },
   // Use a specific port for the built-in static server.
-  port: Number.parseInt(process.env.PORT, 10),
+  port: 8000,
   // Enable the Browsersync user interface.
   ui: {
     // Use a specific port for the user interface.
-    port: Number.parseInt(process.env.PORT, 10) + 1,
+    port: 8001,
   },
   // Open the browser automatically.
   open: true,
