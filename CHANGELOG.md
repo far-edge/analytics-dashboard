@@ -9,6 +9,10 @@
 * Align code with latest digital models.
 * Dockerise.
 
+**SECURITY**
+
+* Fix security vulnerabilities reported by GitHub.
+
 
 ##### [1.0.0] - 2018-01-06
 
