@@ -6,7 +6,8 @@
 
 **FIXED**
 
-* Data source definition is empty in data sources.
+* Data source definition is empty for data sources.
+* Data tab fails when there are sources in different edge gateways with the same ID.
 
 
 ##### [1.0.1] - 2019-11-11

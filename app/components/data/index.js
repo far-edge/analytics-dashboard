@@ -57,12 +57,15 @@ class Data extends Component {
     });
   }
 
-  changeDataSource(id) {
+  changeDataSource(key) {
     // The data source was not changed.
-    if (!!this.state.dataSource && id === this.state.dataSource.id) {
+    if (!!this.state.dataSource && key === `${ this.state.dataSource.edgeGatewayReferenceID }.${ this.state.dataSource.id }`) {
       return;
     }
-    const dataSource = first(this.props.dataSources.filter((ds) => { return ds.id === id; }));
+    const pieces = key.split('.');
+    const dataSource = first(this.props.dataSources.filter((ds) => {
+      return ds.edgeGatewayReferenceID === pieces[0] && ds.id === pieces[1];
+    }));
     const noDataSourceBefore = dataSource && !this.state.dataSource;
     this.setState({ dataSource, data: [] }, () => {
       if (noDataSourceBefore) {
@@ -114,7 +117,7 @@ class Data extends Component {
     // eslint-disable-next-line no-console
     console.log('Render the data.');
     const dataSources = this.props.dataSources.map((ds) => {
-      return { key: ds.id, text: ds.name, value: ds.id };
+      return { key: `${ ds.edgeGatewayReferenceID }.${ ds.id }`, text: ds.name, value: `${ ds.edgeGatewayReferenceID }.${ ds.id }` };
     });
     return (
       <Container className='data-from-source pretty-scroll'>
@@ -126,7 +129,7 @@ class Data extends Component {
               selection
               name='dataSource'
               options={ dataSources }
-              value={ this.state.dataSource ? this.state.dataSource.id : '' }
+              value={ this.state.dataSource ? `${ this.state.dataSource.edgeGatewayReferenceID }.${ this.state.dataSource.id }` : '' }
               onChange={
                 (_e, data) => { this.changeDataSource(data.value); }
               }
