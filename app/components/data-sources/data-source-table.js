@@ -40,7 +40,7 @@ const DataSourceTable = (props) => {
     id: 'data-source-definition',
     Header: tr('DATA_SOURCE_DEFINITION'),
     accessor: (dataSource) => {
-      const id = dataSource.dataSourceDefinition;
+      const id = dataSource.dataSourceDefinitionReferenceID;
       return id ? first(props.dataSourceDefinitions.filter((dsd) => { return dsd.id === id; })).name : '';
     },
     className: 'c-data-source-definition',
